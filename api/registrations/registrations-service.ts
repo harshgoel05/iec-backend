@@ -33,3 +33,8 @@ export async function updateRound(round: any) {
   await dbClient.db().collection("round").deleteOne({});
   await dbClient.db().collection("round").insertOne({ round: round });
 }
+export async function getRound() {
+  const dbClient = await getDbClient();
+  const r = await dbClient.db().collection("round").findOne({});
+  return r;
+}

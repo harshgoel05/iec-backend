@@ -4,6 +4,7 @@ import {
   getAllRegRoundWise,
   addNewApp,
   updateRound,
+  getRound,
 } from "./registrations-service";
 
 async function handleGetRegAll(req: Request, res: Response) {
@@ -74,11 +75,26 @@ async function handleUpdateRound(req: Request, res: Response) {
   }
 }
 
+async function handleGetCurrRound(req: Request, res: Response) {
+  try {
+    const result = await getRound();
+    res.status(200).send(result);
+  } catch (err) {
+    if (err.code) {
+      res.status(err.code).json(err.message);
+    } else
+      res.status(500).json({
+        message: "ERROR! Please contact +91-7519472787 [Harsh] for support",
+      });
+  }
+}
+
 export default function registrationsController() {
   const router = Router();
   router.get("/", handleGetRegAll);
   router.post("/", handleAddReg);
   router.get("/round/:number", handleGetRegRoundWise);
   router.post("/updateround", handleUpdateRound);
+  router.get("/cround", handleGetCurrRound);
   return router;
 }
