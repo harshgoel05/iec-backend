@@ -25,6 +25,7 @@ export async function addNewApp(app) {
   let newapp = app;
   let r = await dbClient.db().collection("round").findOne({});
   newapp.Round = r.round;
+  newapp.timestamp = +new Date();
   await dbClient.db().collection("applications").insertOne(app);
 }
 
